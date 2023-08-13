@@ -1,0 +1,169 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Assets/Player/Sprites/leo0001.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Player/Sprites/leo0002.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Player/Sprites/leo0003.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Player/Sprites/leo0004.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Player/Jugador (LEO).gd" type="Script" id=5]
+[ext_resource path="res://Assets/Player/Luces Grades.png" type="Texture" id=6]
+[ext_resource path="res://Exportacion para android/Joystick/Joystick.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Assets/Armas/Bomba Eletrica/Bomba_Eletrica.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Audio/Dolor V1.mp3" type="AudioStream" id=9]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "abajo",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "arriba",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "derecha",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "izquierda",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 15.5, 31.5 )
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sonido/Dolor:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sonido/Dolor:autoplay")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Resivir_daño"
+tracks/0/type = "value"
+tracks/0/path = NodePath("leo_sprites:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.9 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 9, 20 )
+
+[node name="Jugador" type="KinematicBody2D" groups=["Player"]]
+script = ExtResource( 5 )
+Bomba = ExtResource( 8 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 16, -6 )
+process_mode = 0
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = true
+smoothing_speed = 9.0
+drag_margin_left = 0.07
+drag_margin_top = 0.07
+drag_margin_right = 0.07
+drag_margin_bottom = 0.12
+editor_draw_drag_margin = true
+
+[node name="leo_sprites" type="AnimatedSprite" parent="."]
+position = Vector2( -1.90735e-06, 0.999999 )
+scale = Vector2( 0.25, 0.25 )
+frames = SubResource( 1 )
+animation = "abajo"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( 2.5, 4.5 )
+shape = SubResource( 2 )
+
+[node name="Luces" type="Light2D" parent="."]
+texture = ExtResource( 6 )
+shadow_enabled = true
+
+[node name="Sombras" type="Light2D" parent="."]
+position = Vector2( 2, -6 )
+texture = ExtResource( 6 )
+texture_scale = 10.0
+mode = 3
+range_item_cull_mask = 2
+shadow_enabled = true
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Joystick" parent="UI" instance=ExtResource( 7 )]
+visible = false
+position = Vector2( 124, 366 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 4 )
+"anims/Resivir_daño" = SubResource( 3 )
+
+[node name="Centro_de_colicion_daño" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Centro_de_colicion_daño"]
+visible = false
+position = Vector2( 2.5, 4.5 )
+shape = SubResource( 2 )
+
+[node name="Position2D" type="Position2D" parent="."]
+
+[node name="Poner_bomba" type="Position2D" parent="Position2D"]
+position = Vector2( 0, 32 )
+
+[node name="Area_de_Ataque_Machete" type="Area2D" parent="Position2D" groups=["Ataque_Mele"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Position2D/Area_de_Ataque_Machete"]
+position = Vector2( 0, 20 )
+shape = SubResource( 5 )
+disabled = true
+
+[node name="Area_de_Dialogo" type="Area2D" parent="Position2D" groups=["Area_de_dialogo"]]
+position = Vector2( 0, 24 )
+scale = Vector2( 1, 0.4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Position2D/Area_de_Dialogo"]
+position = Vector2( 0, 20 )
+shape = SubResource( 5 )
+disabled = true
+
+[node name="Sonido" type="Node" parent="."]
+
+[node name="Dolor" type="AudioStreamPlayer" parent="Sonido"]
+stream = ExtResource( 9 )
+autoplay = true
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="area_entered" from="Centro_de_colicion_daño" to="." method="_on_Centro_de_colicion_dao_area_entered"]
