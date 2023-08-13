@@ -1,0 +1,146 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/GUI/Ascensor/Ascensor.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Mundo/Puerta de ascensor.png" type="Texture" id=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Cerrar_Puertas"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Izquierda:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -170, 240 ), Vector2( 169, 240 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Derecha:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 810, 240 ), Vector2( 507, 240 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Lobby:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Piso_1:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Derecha:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 509, 240 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Izquierda:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 169, 240 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Lobby:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Piso_1:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+
+[node name="Ascensor" type="CanvasLayer"]
+pause_mode = 2
+script = ExtResource( 1 )
+
+[node name="Izquierda" type="Sprite" parent="."]
+position = Vector2( 169, 240 )
+scale = Vector2( 1.69, 2.4 )
+texture = ExtResource( 2 )
+
+[node name="Derecha" type="Sprite" parent="."]
+position = Vector2( 509, 240 )
+scale = Vector2( 1.69, 2.4 )
+texture = ExtResource( 2 )
+flip_h = true
+
+[node name="Lobby" type="Button" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 309.0
+margin_top = 194.0
+margin_right = 359.0
+margin_bottom = 214.0
+text = "Lobby"
+icon_align = 1
+
+[node name="Piso_1" type="Button" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 310.0
+margin_top = 222.0
+margin_right = 361.0
+margin_bottom = 242.0
+text = "Piso 1"
+icon_align = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Cerrar_Puertas = SubResource( 1 )
+anims/RESET = SubResource( 2 )
+
+[connection signal="pressed" from="Lobby" to="." method="_on_Lobby_pressed"]
+[connection signal="pressed" from="Piso_1" to="." method="_on_Piso_1_pressed"]

@@ -1,0 +1,237 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Assets/GUI/GUI.gd" type="Script" id=1]
+[ext_resource path="res://Assets/GUI/Inventario/Cuadrado.png" type="Texture" id=2]
+[ext_resource path="res://Assets/GUI/Barra de Vida/Lleno.png" type="Texture" id=3]
+[ext_resource path="res://Assets/GUI/Barra de Vida/Corrompido.png" type="Texture" id=4]
+[ext_resource path="res://Font/NokiaCellphoneFC.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://Assets/GUI/Energia/Energia.png" type="Texture" id=6]
+[ext_resource path="res://Assets/GUI/Inventario/Icono.png" type="Texture" id=7]
+[ext_resource path="res://Exportacion para android/BotonA.png" type="Texture" id=8]
+[ext_resource path="res://Exportacion para android/Atacar.png" type="Texture" id=9]
+[ext_resource path="res://Exportacion para android/Boton direciona 2l.png" type="Texture" id=10]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 5 )
+
+[sub_resource type="Animation" id=5]
+resource_name = "Bomba_Eletrica"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Iconos:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Machete"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Iconos:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Mano"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Iconos:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Iconos:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+
+[sub_resource type="DynamicFont" id=6]
+font_data = ExtResource( 5 )
+
+[node name="GUI" type="CanvasLayer"]
+pause_mode = 2
+script = ExtResource( 1 )
+
+[node name="Barra_de_Vida" type="TextureProgress" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_scale = Vector2( 0.5, 0.5 )
+texture_under = ExtResource( 4 )
+texture_progress = ExtResource( 3 )
+fill_mode = 2
+
+[node name="Energia" type="HBoxContainer" parent="."]
+margin_left = 59.0
+margin_top = 9.0
+margin_right = 130.0
+margin_bottom = 71.0
+
+[node name="Icono" type="TextureRect" parent="Energia"]
+margin_right = 45.0
+margin_bottom = 63.0
+texture = ExtResource( 6 )
+
+[node name="Label" type="Label" parent="Energia"]
+margin_left = 49.0
+margin_top = 21.0
+margin_right = 81.0
+margin_bottom = 41.0
+custom_colors/font_color = Color( 1, 1, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "100"
+
+[node name="Pausa" type="Control" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -24.0
+margin_top = -22.0
+margin_right = 24.0
+margin_bottom = 22.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Pausa"]
+margin_right = 40.0
+margin_bottom = 40.0
+alignment = 1
+
+[node name="Jugar" type="Button" parent="Pausa/VBoxContainer"]
+margin_right = 48.0
+margin_bottom = 20.0
+text = "Jugar"
+icon_align = 1
+
+[node name="Menu" type="Button" parent="Pausa/VBoxContainer"]
+margin_top = 24.0
+margin_right = 48.0
+margin_bottom = 44.0
+text = "Menu"
+icon_align = 1
+
+[node name="Inventario" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Cuadro" type="Sprite" parent="Inventario"]
+position = Vector2( 88, 107 )
+texture = ExtResource( 2 )
+
+[node name="Iconos" type="Sprite" parent="Inventario"]
+position = Vector2( 88, 107 )
+texture = ExtResource( 7 )
+hframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Inventario"]
+anims/Bomba_Eletrica = SubResource( 5 )
+anims/Machete = SubResource( 2 )
+anims/Mano = SubResource( 3 )
+anims/RESET = SubResource( 4 )
+
+[node name="Label" type="Label" parent="Inventario"]
+margin_left = 121.0
+margin_top = 95.0
+margin_right = 225.0
+margin_bottom = 115.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 6 )
+align = 1
+valign = 1
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Arriba" type="TouchScreenButton" parent="Node"]
+modulate = Color( 1, 1, 1, 0.882353 )
+position = Vector2( 83, 313 )
+normal = ExtResource( 10 )
+action = "Tecla_W"
+visibility_mode = 1
+
+[node name="Derecha" type="TouchScreenButton" parent="Node"]
+modulate = Color( 1, 1, 1, 0.882353 )
+position = Vector2( 13, 414 )
+rotation = -1.5708
+normal = ExtResource( 10 )
+action = "Tecla_A"
+visibility_mode = 1
+
+[node name="Izquierda" type="TouchScreenButton" parent="Node"]
+modulate = Color( 1, 1, 1, 0.882353 )
+position = Vector2( 219, 350 )
+rotation = 1.5708
+normal = ExtResource( 10 )
+action = "Tecla_D"
+visibility_mode = 1
+
+[node name="Abajo" type="TouchScreenButton" parent="Node"]
+modulate = Color( 1, 1, 1, 0.882353 )
+position = Vector2( 147, 457 )
+rotation = 3.14159
+normal = ExtResource( 10 )
+action = "Tecla_S"
+visibility_mode = 1
+
+[node name="Ataque" type="TouchScreenButton" parent="Node"]
+modulate = Color( 1, 1, 1, 0.882353 )
+position = Vector2( 453, 351 )
+normal = ExtResource( 9 )
+action = "Ataque"
+visibility_mode = 1
+
+[node name="Correr" type="TouchScreenButton" parent="Node"]
+modulate = Color( 1, 1, 1, 0.882353 )
+position = Vector2( 541, 364 )
+normal = ExtResource( 8 )
+action = "Correr"
+visibility_mode = 1
+
+[node name="Derecha2" type="TouchScreenButton" parent="Node"]
+modulate = Color( 1, 1, 1, 0.882353 )
+position = Vector2( 523, 337 )
+rotation = -1.5708
+scale = Vector2( 0.5, 0.5 )
+normal = ExtResource( 10 )
+action = "C"
+visibility_mode = 1
+
+[node name="Izquierda2" type="TouchScreenButton" parent="Node"]
+modulate = Color( 1, 1, 1, 0.882353 )
+position = Vector2( 607, 304 )
+rotation = 1.5708
+scale = Vector2( 0.5, 0.5 )
+normal = ExtResource( 10 )
+action = "V"
+visibility_mode = 1
+
+[connection signal="pressed" from="Pausa/VBoxContainer/Jugar" to="." method="_on_Jugar_pressed"]
+[connection signal="pressed" from="Pausa/VBoxContainer/Menu" to="." method="_on_Menu_pressed"]
